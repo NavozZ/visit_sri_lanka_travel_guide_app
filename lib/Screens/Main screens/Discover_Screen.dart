@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:visit_sri_lanka_travel_guide_app/utils/app_colors.dart';
 
@@ -64,7 +65,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                       ),
                       InkWell(
                         onTap: () {
-                          //signout();
+                          signout();
                         },
                         child: Icon(
                           Icons.logout,
@@ -193,5 +194,9 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
         ],
       ),
     );
+  }
+
+  Future signout() async {
+    await FirebaseAuth.instance.signOut();
   }
 }
