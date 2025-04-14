@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:visit_sri_lanka_travel_guid_application/widgets/TopicBar.dart';
+
+import 'package:visit_sri_lanka_travel_guide_app/widgets/TopicBar.dart';
 
 class AlertScreen extends StatefulWidget {
   const AlertScreen({super.key});

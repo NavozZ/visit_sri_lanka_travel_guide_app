@@ -1,0 +1,113 @@
+import 'package:flutter/material.dart';
+import 'package:visit_sri_lanka_travel_guide_app/Screens/Main%20screens/Alert_Screen.dart';
+import 'package:visit_sri_lanka_travel_guide_app/Screens/Main%20screens/Discover_Screen.dart';
+import 'package:visit_sri_lanka_travel_guide_app/Screens/Main%20screens/Places_screen.dart';
+import 'package:visit_sri_lanka_travel_guide_app/Screens/Main%20screens/Tours_screen.dart';
+import 'package:visit_sri_lanka_travel_guide_app/Screens/Main%20screens/events_screen.dart';
+import 'package:visit_sri_lanka_travel_guide_app/utils/app_colors.dart';
+
+class Homepage extends StatefulWidget {
+  const Homepage({super.key});
+
+  @override
+  State<Homepage> createState() => _HomepageState();
+}
+
+class _HomepageState extends State<Homepage> {
+  int screenNo = 0;
+
+  List<Widget> screenList = const [
+    DiscoverScreen(),
+    PlacesScreen(),
+    ToursScreen(),
+    EventsScreen(),
+    AlertScreen()
+
+    // MessageScreen(),
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: screenList[screenNo],
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+              color: AppColors.primaryColor),
+          width: double.infinity,
+          height: 60,
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                bottomNavigationIcon(
+                  icon: Icons.favorite,
+                  iconText: "Discover",
+                  index: 0,
+                ),
+                bottomNavigationIcon(
+                    icon: Icons.edit, iconText: "Places", index: 1),
+                bottomNavigationIcon(
+                    icon: Icons.shopping_bag, iconText: "Tours", index: 2),
+                bottomNavigationIcon(
+                    icon: Icons.newspaper, iconText: "Events", index: 3),
+                bottomNavigationIcon(
+                    icon: Icons.newspaper, iconText: "News", index: 4),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget bottomNavigationIcon(
+      {required IconData icon, required String iconText, required int index}) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          screenNo = index;
+        });
+        print(screenNo);
+      },
+      child: Column(
+        children: [
+          Icon(
+            icon,
+            color: screenNo == index ? Colors.white : Colors.grey,
+            size: screenNo == index ? 23 : 18,
+          ),
+          Text(
+            iconText,
+            style: TextStyle(
+                color: screenNo == index ? Colors.white : Colors.grey),
+          ),
+        ],
+      ),
+    );
+  }
+  // Future signout() async {
+  //   await FirebaseAuth.instance.signOut();
+  // }
+}
+
+      // body: Center(
+      //     child: Column(
+      //   mainAxisAlignment: MainAxisAlignment.center,
+      //   children: [
+      //     InkWell(
+      //       onTap: () {
+      //         signout();
+      //       },
+      //       child: Icon(
+      //         Icons.logout,
+      //         color: Colors.black,
+      //       ),
+      //     ),
+      
+
+  // Future signout() async {
+  //   await FirebaseAuth.instance.signOut();
+  // }
