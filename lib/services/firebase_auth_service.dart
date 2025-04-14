@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:visit_sri_lanka_travel_guid_application/services/firebase_services.dart';
+import 'package:visit_sri_lanka_travel_guide_app/services/firebase_services.dart';
 
 class FirebaseAuthService {
   static Future<String> signIn(
