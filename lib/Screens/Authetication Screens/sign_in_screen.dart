@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:visit_sri_lanka_travel_guide_app/services/firebase_auth_service.dart';
 import 'package:visit_sri_lanka_travel_guide_app/widgets/custom_button.dart';
