@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "464272717456",
+    "project_id": "travel-guide-app-f9c00",
+    "storage_bucket": "travel-guide-app-f9c00.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:464272717456:android:d6f2474dbff183691cca15",
+        "android_client_info": {
+          "package_name": "com.example.visit_sri_lanka_travel_guid_application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIYjFktHuBr4aHqaQ0v9Qg8SUSKyCsvEo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
