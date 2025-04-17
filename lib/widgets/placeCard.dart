@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:visit_sri_lanka_travel_guide_app/Models/Places.dart';
 
-class PlaceCard extends StatelessWidget {
-  final String imageUrl;
-  final String placeName;
-  final String placeDescription;
-
+class PlaceCard extends StatefulWidget {
   const PlaceCard({
     Key? key,
-    required this.imageUrl,
-    required this.placeName,
-    required this.placeDescription,
+    required this.placesData,
   }) : super(key: key);
 
+  final Places placesData;
+
+  @override
+  State<PlaceCard> createState() => _PlaceCardState();
+}
+
+class _PlaceCardState extends State<PlaceCard> {
   @override
   Widget build(BuildContext context) {
     double size = MediaQuery.of(context).size.width * 0.6;
@@ -19,7 +21,7 @@ class PlaceCard extends StatelessWidget {
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Container(
+      child: SizedBox(
         width: size,
         height: size,
         child: Column(
@@ -31,7 +33,7 @@ class PlaceCard extends StatelessWidget {
                 topRight: Radius.circular(16),
               ),
               child: Image.network(
-                imageUrl,
+                (widget.placesData.mainimage!),
                 width: size,
                 height: size * 0.5,
                 fit: BoxFit.cover,
@@ -43,7 +45,7 @@ class PlaceCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    placeName,
+                    widget.placesData.title!,
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -51,7 +53,7 @@ class PlaceCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    placeDescription,
+                    widget.placesData.description!,
                     style: TextStyle(fontSize: 13, color: Colors.grey[700]),
                   ),
                 ],

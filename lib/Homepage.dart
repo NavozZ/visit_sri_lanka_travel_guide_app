@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:visit_sri_lanka_travel_guide_app/Providers/places_provider.dart';
 import 'package:visit_sri_lanka_travel_guide_app/Screens/Main%20screens/Alert_Screen.dart';
 import 'package:visit_sri_lanka_travel_guide_app/Screens/Main%20screens/Discover_Screen.dart';
 import 'package:visit_sri_lanka_travel_guide_app/Screens/Main%20screens/Places_screen.dart';
 import 'package:visit_sri_lanka_travel_guide_app/Screens/Main%20screens/Tours_screen.dart';
 import 'package:visit_sri_lanka_travel_guide_app/Screens/Main%20screens/events_screen.dart';
+import 'package:visit_sri_lanka_travel_guide_app/services/firebase_services.dart';
 import 'package:visit_sri_lanka_travel_guide_app/utils/app_colors.dart';
 
 class Homepage extends StatefulWidget {
@@ -25,6 +28,17 @@ class _HomepageState extends State<Homepage> {
 
     // MessageScreen(),
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    FirebaseServices.getPlaces().then((placesData) {
+      context.read<PlacesProvider>().addPlaces(places: placesData);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
