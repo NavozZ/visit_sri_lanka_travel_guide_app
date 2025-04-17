@@ -2,8 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:visit_sri_lanka_travel_guide_app/Models/Places.dart';
+
 import 'package:visit_sri_lanka_travel_guide_app/Models/Tours.dart';
 import 'package:visit_sri_lanka_travel_guide_app/Providers/Tours_provider.dart';
+
 import 'package:visit_sri_lanka_travel_guide_app/Providers/places_provider.dart';
 import 'package:visit_sri_lanka_travel_guide_app/utils/app_colors.dart';
 
