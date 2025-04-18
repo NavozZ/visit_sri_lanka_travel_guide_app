@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:visit_sri_lanka_travel_guide_app/Providers/Tours_provider.dart';
 import 'package:visit_sri_lanka_travel_guide_app/Providers/places_provider.dart';
 import 'package:visit_sri_lanka_travel_guide_app/Screens/Main%20screens/Alert_Screen.dart';
 import 'package:visit_sri_lanka_travel_guide_app/Screens/Main%20screens/Discover_Screen.dart';
@@ -31,11 +32,19 @@ class _HomepageState extends State<Homepage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
-    FirebaseServices.getPlaces().then((placesData) {
-      context.read<PlacesProvider>().addPlaces(places: placesData);
+    // Delay to ensure context is available
+    Future.microtask(() async {
+      try {
+        final placesData = await FirebaseServices.getPlaces();
+        context.read<PlacesProvider>().addPlaces(places: placesData);
+
+        final toursData = await FirebaseServices.getTours();
+        context.read<ToursProvider>().addTours(tours: toursData);
+      } catch (e) {
+        print("Error loading data: $e");
+      }
     });
   }
 
