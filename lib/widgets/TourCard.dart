@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:visit_sri_lanka_travel_guide_app/Models/Tours.dart';
 
-class TourCard extends StatelessWidget {
-  final String imageUrl;
-  final String tourName;
-  final String category;
-  final String price;
-
+class TourCard extends StatefulWidget {
   const TourCard({
     Key? key,
-    required this.imageUrl,
-    required this.tourName,
-    required this.category,
-    required this.price,
+    required this.toursData,
   }) : super(key: key);
 
+  final Tours toursData;
+
+  @override
+  State<TourCard> createState() => _TourCardState();
+}
+
+class _TourCardState extends State<TourCard> {
   @override
   Widget build(BuildContext context) {
     double size = MediaQuery.of(context).size.width * 0.5;
@@ -21,7 +21,7 @@ class TourCard extends StatelessWidget {
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Container(
+      child: SizedBox(
         width: size,
         height: size,
         child: Column(
@@ -33,7 +33,7 @@ class TourCard extends StatelessWidget {
                 topRight: Radius.circular(16),
               ),
               child: Image.network(
-                imageUrl,
+                (widget.toursData.mainimage!),
                 width: size,
                 height: size * 0.5,
                 fit: BoxFit.cover,
@@ -45,27 +45,27 @@ class TourCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    tourName,
+                    widget.toursData.title!,
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Row(
-                    children: [
-                      Text("/"),
-                      Text(
-                        category,
-                        style: const TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   children: [
+                  //     Text("/"),
+                  //     Text(
+                  //       "Per Person",
+                  //       style: const TextStyle(
+                  //         fontSize: 10,
+                  //         fontWeight: FontWeight.bold,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   const SizedBox(height: 5),
                   Text(
-                    price,
+                    "Price: \$${widget.toursData.prices?['per-person']} per person",
                     style: TextStyle(fontSize: 13, color: Colors.grey[700]),
                   ),
                 ],
