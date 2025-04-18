@@ -21,7 +21,7 @@ class _TourCardState extends State<TourCard> {
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Container(
+      child: SizedBox(
         width: size,
         height: size,
         child: Column(
@@ -51,21 +51,21 @@ class _TourCardState extends State<TourCard> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Row(
-                    children: [
-                      Text("/"),
-                      Text(
-                        "Per Person",
-                        style: const TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   children: [
+                  //     Text("/"),
+                  //     Text(
+                  //       "Per Person",
+                  //       style: const TextStyle(
+                  //         fontSize: 10,
+                  //         fontWeight: FontWeight.bold,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   const SizedBox(height: 5),
                   Text(
-                    widget.toursData.price!,
+                    "Price: \$${widget.toursData.prices?['per-person']} per person",
                     style: TextStyle(fontSize: 13, color: Colors.grey[700]),
                   ),
                 ],

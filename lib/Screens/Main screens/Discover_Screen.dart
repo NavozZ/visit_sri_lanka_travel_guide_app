@@ -149,7 +149,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 250,
+                  height: 220,
                   child: Consumer<ToursProvider>(
                     builder: (context, toursProvider, child) {
                       print(toursProvider.toursData);

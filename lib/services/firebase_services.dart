@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:visit_sri_lanka_travel_guide_app/Models/Places.dart';
+import 'package:visit_sri_lanka_travel_guide_app/Models/Tours.dart';
 
 class FirebaseServices {
   static addSignUpData(
@@ -38,5 +39,27 @@ class FirebaseServices {
     }
     print(places);
     return places; // Return the list of places
+  }
+
+  //get example documents from Firebase DB and return tours type data
+  static Future<List<Tours>> getTours() async {
+    // get data from Firebase DB
+    CollectionReference toursCollectionReference =
+        FirebaseFirestore.instance.collection('tours');
+
+    final toursDocuments = await toursCollectionReference.get();
+
+    toursCollectionReference.get().then((toursDocuments) {});
+
+    List<Tours> tours = [];
+    for (var toursDoc in toursDocuments.docs) {
+      tours.add(Tours(
+        title: toursDoc["title"],
+        mainimage: toursDoc["main-image"],
+        prices: Map<String, dynamic>.from(toursDoc["price"]),
+      ));
+    }
+    print(tours);
+    return tours; // Return the list of places
   }
 }
