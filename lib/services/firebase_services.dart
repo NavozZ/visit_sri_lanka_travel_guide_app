@@ -22,16 +22,15 @@ class FirebaseServices {
   //get example documents from Firebase DB and return Hotel type data
   static Future<List<Places>> getPlaces() async {
     try {
-      // Reference to the "places" collection
       CollectionReference placesCollectionReference =
           FirebaseFirestore.instance.collection('places');
 
-      // Fetch the documents
       final querySnapshot = await placesCollectionReference.get();
 
-      // Convert documents to Places objects
       List<Places> places = querySnapshot.docs.map((doc) {
         final data = doc.data() as Map<String, dynamic>;
+        final GeoPoint? location = data['location'];
+
         return Places(
           title: data['title'] ?? '',
           mainimage: data['main-image'] ?? '',
@@ -40,6 +39,8 @@ class FirebaseServices {
           otherImages: data.containsKey('other-images')
               ? List<String>.from(data['other-images'])
               : [],
+          latitude: location?.latitude,
+          longitude: location?.longitude,
         );
       }).toList();
 

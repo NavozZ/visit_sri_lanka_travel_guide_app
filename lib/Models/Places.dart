@@ -4,13 +4,18 @@ class Places {
   String? description;
   String? moreinformation;
   List<String>? otherImages;
+  double? latitude;
+  double? longitude;
 
-  Places(
-      {this.title,
-      this.description,
-      this.mainimage,
-      this.otherImages,
-      this.moreinformation});
+  Places({
+    this.title,
+    this.description,
+    this.mainimage,
+    this.otherImages,
+    this.moreinformation,
+    this.latitude,
+    this.longitude,
+  });
 
   factory Places.fromSnapshot(Map<String, dynamic> data) {
     return Places(
