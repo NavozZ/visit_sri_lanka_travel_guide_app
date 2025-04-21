@@ -3,9 +3,9 @@ import 'package:visit_sri_lanka_travel_guide_app/Models/Tours.dart';
 
 class TourCard extends StatefulWidget {
   const TourCard({
-    Key? key,
+    super.key,
     required this.toursData,
-  }) : super(key: key);
+  });
 
   final Tours toursData;
 
@@ -51,18 +51,6 @@ class _TourCardState extends State<TourCard> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  // Row(
-                  //   children: [
-                  //     Text("/"),
-                  //     Text(
-                  //       "Per Person",
-                  //       style: const TextStyle(
-                  //         fontSize: 10,
-                  //         fontWeight: FontWeight.bold,
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
                   const SizedBox(height: 5),
                   Text(
                     "Price: \$${widget.toursData.prices?['per-person']} per person",
