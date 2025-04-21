@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:visit_sri_lanka_travel_guide_app/Models/Places.dart';
+import 'package:visit_sri_lanka_travel_guide_app/utils/utility/map_utils.dart';
 
 class PlaceCard extends StatefulWidget {
   const PlaceCard({
@@ -160,6 +161,21 @@ class _PlaceCardState extends State<PlaceCard> {
               Text(
                 place.moreinformation ?? '',
                 style: const TextStyle(fontSize: 15),
+              ),
+
+              ElevatedButton.icon(
+                onPressed: () {
+                  if (place.latitude != null && place.longitude != null) {
+                    MapUtils.launchGoogleMaps(
+                        place.latitude!, place.longitude!);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Location not available')),
+                    );
+                  }
+                },
+                icon: const Icon(Icons.map),
+                label: const Text('Navigate with Google Maps'),
               ),
             ],
           ),
