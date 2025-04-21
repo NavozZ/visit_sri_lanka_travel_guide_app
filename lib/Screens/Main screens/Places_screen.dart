@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
+import 'package:visit_sri_lanka_travel_guide_app/Providers/places_provider.dart';
 import 'package:visit_sri_lanka_travel_guide_app/widgets/TopicBar.dart';
+import 'package:visit_sri_lanka_travel_guide_app/widgets/placeCard.dart';
 
 class PlacesScreen extends StatefulWidget {
   const PlacesScreen({super.key});
@@ -10,19 +12,74 @@ class PlacesScreen extends StatefulWidget {
 }
 
 class _PlacesScreenState extends State<PlacesScreen> {
+  final String _backgroundImageUrl =
+      'https://firebasestorage.googleapis.com/v0/b/travel-guide-app-f9c00.firebasestorage.app/o/assets%2Fdownload%20(9)%201.jpg?alt=media&token=b9867aeb-594d-4859-8d51-8f09dedaf78f';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(children: [
-      Positioned.fill(
-        child: Image.network(
-          'https://firebasestorage.googleapis.com/v0/b/travel-guide-app-f9c00.firebasestorage.app/o/assets%2Fdownload%20(9)%201.jpg?alt=media&token=b9867aeb-594d-4859-8d51-8f09dedaf78f',
-          fit: BoxFit.cover,
-        ),
+      body: Stack(
+        children: [
+          // Background Image
+          Positioned.fill(
+            child: Image.network(
+              _backgroundImageUrl,
+              fit: BoxFit.cover,
+            ),
+          ),
+
+          // Topic Bar
+          const TopicBar(
+            topic: " Destinations",
+          ),
+
+          // Search Box
+          Positioned(
+            top: 130, // adjust as needed to sit below TopicBar
+            left: 20,
+            right: 20,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.9),
+                borderRadius: BorderRadius.circular(30),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 6,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: 'Search destinations...',
+                  border: InputBorder.none,
+                  icon: Icon(Icons.search, color: Colors.grey[700]),
+                ),
+              ),
+            ),
+          ),
+
+          Positioned.fill(
+            top: 200, // Give it space below the search bar
+            child: GridView.builder(
+              padding: const EdgeInsets.only(top: 16, bottom: 80),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.75, // Control height better
+              ),
+              itemCount: context.read<PlacesProvider>().placesData.length,
+              itemBuilder: (BuildContext context, int index) {
+                return PlaceCard(
+                  placesData: context.read<PlacesProvider>().placesData[index],
+                  showDescription: true,
+                );
+              },
+            ),
+          ),
+        ],
       ),
-      TopicBar(
-        Topic: " Destinations",
-      ),
-    ]));
+    );
   }
 }
