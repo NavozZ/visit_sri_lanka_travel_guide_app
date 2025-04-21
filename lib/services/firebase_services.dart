@@ -21,24 +21,33 @@ class FirebaseServices {
 
   //get example documents from Firebase DB and return Hotel type data
   static Future<List<Places>> getPlaces() async {
-    // get data from Firebase DB
-    CollectionReference placesCollectionReference =
-        FirebaseFirestore.instance.collection('places');
+    try {
+      // Reference to the "places" collection
+      CollectionReference placesCollectionReference =
+          FirebaseFirestore.instance.collection('places');
 
-    final placesDocuments = await placesCollectionReference.get();
+      // Fetch the documents
+      final querySnapshot = await placesCollectionReference.get();
 
-    placesCollectionReference.get().then((placesDocuments) {});
+      // Convert documents to Places objects
+      List<Places> places = querySnapshot.docs.map((doc) {
+        final data = doc.data() as Map<String, dynamic>;
+        return Places(
+          title: data['title'] ?? '',
+          mainimage: data['main-image'] ?? '',
+          description: data['description'] ?? '',
+          moreinformation: data['more-information'] ?? '',
+          otherImages: data.containsKey('other-images')
+              ? List<String>.from(data['other-images'])
+              : [],
+        );
+      }).toList();
 
-    List<Places> places = [];
-    for (var placesDoc in placesDocuments.docs) {
-      places.add(Places(
-        title: placesDoc["title"],
-        mainimage: placesDoc["main-image"],
-        description: placesDoc["description"],
-      ));
+      return places;
+    } catch (e) {
+      print('Error fetching places: $e');
+      return [];
     }
-    print(places);
-    return places; // Return the list of places
   }
 
   //get example documents from Firebase DB and return tours type data
