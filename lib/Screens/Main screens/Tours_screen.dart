@@ -21,7 +21,7 @@ class _ToursScreenState extends State<ToursScreen> {
         ),
       ),
       TopicBar(
-        Topic: " Tours",
+        topic: " Tours",
       )
     ]));
   }

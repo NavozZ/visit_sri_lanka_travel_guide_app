@@ -2,6 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:visit_sri_lanka_travel_guide_app/Models/Places.dart';
+
+import 'package:visit_sri_lanka_travel_guide_app/Models/Tours.dart';
+import 'package:visit_sri_lanka_travel_guide_app/Providers/Tours_provider.dart';
+
 import 'package:visit_sri_lanka_travel_guide_app/Providers/places_provider.dart';
 import 'package:visit_sri_lanka_travel_guide_app/utils/app_colors.dart';
 
@@ -144,39 +148,27 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                     ],
                   ),
                 ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      TourCard(
-                        imageUrl:
-                            'https://inooki.com/wp-content/uploads/2024/03/Mob2-533x500-1.jpg',
-                        tourName: "Down South Tour",
-                        category: "per person",
-                        price: "100",
-                      ),
-                      TourCard(
-                        imageUrl:
-                            'https://media-cdn.tripadvisor.com/media/attractions-splice-spp-674x446/06/d7/27/d9.jpg',
-                        tourName: "Ancient Cities Tour",
-                        category: "per person",
-                        price: "100",
-                      ),
-                      TourCard(
-                        imageUrl:
-                            'https://helanka.co/wp-content/uploads/2024/09/Sri-Lanka-Hill-Country-Tours.jpg',
-                        tourName: "Hill Country Tour",
-                        category: "per person",
-                        price: "100",
-                      ),
-                      TourCard(
-                        imageUrl:
-                            'https://www.onthegotours.com/repository/Leopard--Sri-Lanka--On-The-Go-Tours-325451478099864.jpg',
-                        tourName: "Wildlife & Nature Tour",
-                        category: "per person",
-                        price: "100",
-                      ),
-                    ],
+                SizedBox(
+                  height: 220,
+                  child: Consumer<ToursProvider>(
+                    builder: (context, toursProvider, child) {
+                      print(toursProvider.toursData);
+                      List<Tours> allToursData = toursProvider.toursData;
+
+                      return allToursData.isEmpty
+                          ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : ListView.builder(
+                              itemCount: allToursData.length,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return TourCard(
+                                  toursData: allToursData[index],
+                                );
+                              },
+                            );
+                    },
                   ),
                 ),
               ],

@@ -21,7 +21,7 @@ class _EventsScreenState extends State<EventsScreen> {
         ),
       ),
       TopicBar(
-        Topic: " Events",
+        topic: " Events",
       )
     ]));
   }
