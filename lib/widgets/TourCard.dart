@@ -34,7 +34,7 @@ class TourCard extends StatelessWidget {
                 child: Image.network(
                   (toursData.mainimage!),
                   width: size,
-                  height: size * 0.5,
+                  height: size * 0.6,
                   fit: BoxFit.cover,
                 ),
               ),
