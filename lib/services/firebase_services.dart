@@ -51,25 +51,35 @@ class FirebaseServices {
     }
   }
 
-  //get example documents from Firebase DB and return tours type data
+  //get example documents from Firebase DB and return Hotel type data
   static Future<List<Tours>> getTours() async {
-    // get data from Firebase DB
-    CollectionReference toursCollectionReference =
-        FirebaseFirestore.instance.collection('tours');
+    try {
+      CollectionReference toursCollectionReference =
+          FirebaseFirestore.instance.collection('tours');
 
-    final toursDocuments = await toursCollectionReference.get();
+      final querySnapshot = await toursCollectionReference.get();
 
-    toursCollectionReference.get().then((toursDocuments) {});
+      List<Tours> tours = querySnapshot.docs.map((doc) {
+        final data = doc.data() as Map<String, dynamic>;
 
-    List<Tours> tours = [];
-    for (var toursDoc in toursDocuments.docs) {
-      tours.add(Tours(
-        title: toursDoc["title"],
-        mainimage: toursDoc["main-image"],
-        prices: Map<String, dynamic>.from(toursDoc["price"]),
-      ));
+        return Tours(
+          title: data['title'] ?? '',
+          description: data['description'] ?? '',
+          mainimage: data['main-image'] ?? '',
+          prices: Map<String, dynamic>.from(data["price"]),
+          visitingplaces: data.containsKey('visiting-places')
+              ? List<String>.from(data['visiting-places'])
+              : [],
+          otherImages: data.containsKey('other-images')
+              ? List<String>.from(data['other-images'])
+              : [],
+        );
+      }).toList();
+
+      return tours;
+    } catch (e) {
+      print('Error fetching tours: $e');
+      return [];
     }
-    print(tours);
-    return tours; // Return the list of places
   }
 }

@@ -67,13 +67,13 @@ class _PlacesScreenState extends State<PlacesScreen> {
               padding: const EdgeInsets.only(top: 16, bottom: 80),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 0.75, // Control height better
+                childAspectRatio: 1.0, // Control height better
               ),
               itemCount: context.read<PlacesProvider>().placesData.length,
               itemBuilder: (BuildContext context, int index) {
                 return PlaceCard(
                   placesData: context.read<PlacesProvider>().placesData[index],
-                  showDescription: true,
+                  showDescription: false,
                 );
               },
             ),

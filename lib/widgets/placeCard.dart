@@ -24,7 +24,7 @@ class PlaceCard extends StatelessWidget {
       child: Card(
         elevation: 4,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        child: Container(
+        child: SizedBox(
           width: width,
           child: Column(
             mainAxisSize: MainAxisSize.min,
