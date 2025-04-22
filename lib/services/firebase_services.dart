@@ -64,8 +64,12 @@ class FirebaseServices {
 
         return Tours(
           title: data['title'] ?? '',
+          description: data['description'] ?? '',
           mainimage: data['main-image'] ?? '',
           prices: Map<String, dynamic>.from(data["price"]),
+          visitingplaces: data.containsKey('visiting-places')
+              ? List<String>.from(data['visiting-places'])
+              : [],
           otherImages: data.containsKey('other-images')
               ? List<String>.from(data['other-images'])
               : [],
@@ -78,29 +82,4 @@ class FirebaseServices {
       return [];
     }
   }
-
-  // //get example documents from Firebase DB and return tours type data
-  // static Future<List<Tours>> getTours() async {
-  //   // get data from Firebase DB
-  //   CollectionReference toursCollectionReference =
-  //       FirebaseFirestore.instance.collection('tours');
-
-  //   final toursDocuments = await toursCollectionReference.get();
-
-  //   toursCollectionReference.get().then((toursDocuments) {});
-
-  //   List<Tours> tours = [];
-  //   for (var toursDoc in toursDocuments.docs) {
-  //     tours.add(Tours(
-  //       title: toursDoc["title"],
-  //       mainimage: toursDoc["main-image"],
-  //       prices: Map<String, dynamic>.from(toursDoc["price"]),
-  //       otherImages: toursDoc.containsKey('other-images')
-  //             ? List<String>.from(toursDoc['other-images'])
-  //             : [],
-  //     ));
-  //   }
-  //   print(tours);
-  //   return tours; // Return the list of places
-  // }
 }

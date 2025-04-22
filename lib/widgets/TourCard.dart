@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:visit_sri_lanka_travel_guide_app/Models/Tours.dart';
+import 'package:visit_sri_lanka_travel_guide_app/widgets/custom_button.dart';
 
 class TourCard extends StatelessWidget {
   const TourCard({
@@ -136,11 +137,101 @@ class TourCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 10),
+                Text(
+                  tour.description ?? '',
+                  style: const TextStyle(fontSize: 14),
+                ),
+                const SizedBox(height: 12),
+                const Text(
+                  'Visiting Places',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                // Visiting Places List
+                ...?tour.visitingplaces?.map<Widget>((place) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 2.0),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.location_on,
+                            size: 14, color: Colors.redAccent),
+                        const SizedBox(width: 6),
+                        Expanded(
+                          child: Text(
+                            place,
+                            style: const TextStyle(fontSize: 14),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }).toList(),
+                const SizedBox(height: 12),
+                const Text(
+                  'Tour Prices',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                // Display Prices if available
+                if (tour.prices != null && tour.prices!.isNotEmpty)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      for (var entry in tour.prices!.entries)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 6),
+                          child: Row(
+                            children: [
+                              Text(
+                                '${_capitalizeWords(entry.key)}: ',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                              Text(
+                                '\$${entry.value}',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.green,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                    ],
+                  )
+                else
+                  const Text(
+                    'No price information available',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey,
+                    ),
+                  ),
+                Center(child: CustomButton(btntext: "BOOK", onTap: () {}))
               ],
             ),
           ),
         );
       },
     );
+  }
+
+  String _capitalizeWords(String text) {
+    return text
+        .split('-')
+        .map((word) => word[0].toUpperCase() + word.substring(1).toLowerCase())
+        .join(' ');
   }
 }
