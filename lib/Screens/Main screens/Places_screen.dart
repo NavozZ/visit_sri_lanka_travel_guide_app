@@ -18,6 +18,14 @@ class _PlacesScreenState extends State<PlacesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar:
+          true, // Optional: allows content to go under AppBar
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(100), // Adjust the height as needed
+        child: TopicBar(
+          topic: "Destinations",
+        ),
+      ),
       body: Stack(
         children: [
           // Background Image
@@ -26,11 +34,6 @@ class _PlacesScreenState extends State<PlacesScreen> {
               _backgroundImageUrl,
               fit: BoxFit.cover,
             ),
-          ),
-
-          // Topic Bar
-          const TopicBar(
-            topic: " Destinations",
           ),
 
           // Search Box
