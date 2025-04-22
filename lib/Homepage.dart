@@ -51,39 +51,58 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: screenList[screenNo],
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50),
-              color: AppColors.primaryColor),
-          width: double.infinity,
-          height: 60,
-          child: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                bottomNavigationIcon(
-                  icon: Icons.favorite,
-                  iconText: "Discover",
-                  index: 0,
+        body: screenList[screenNo],
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Stack(
+            children: [
+              // Background image
+              ClipRRect(
+                borderRadius: BorderRadius.circular(50),
+                child: Image.network(
+                  'https://firebasestorage.googleapis.com/v0/b/travel-guide-app-f9c00.firebasestorage.app/o/assets%2FRectangle%2013%201.jpg?alt=media&token=e9aa3f31-2fa1-483d-a347-b6a20d3f0624',
+                  width: double.infinity,
+                  height: 60,
+                  fit: BoxFit.cover,
                 ),
-                bottomNavigationIcon(
-                    icon: Icons.edit, iconText: "Places", index: 1),
-                bottomNavigationIcon(
-                    icon: Icons.shopping_bag, iconText: "Tours", index: 2),
-                bottomNavigationIcon(
-                    icon: Icons.newspaper, iconText: "Events", index: 3),
-                bottomNavigationIcon(
-                    icon: Icons.newspaper, iconText: "News", index: 4),
-              ],
-            ),
+              ),
+
+              // Navigation bar content with semi-transparent background
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  color: AppColors.primaryColor
+                      .withOpacity(0.8), // Optional overlay
+                ),
+                height: 60,
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      bottomNavigationIcon(
+                        icon: Icons.favorite,
+                        iconText: "Discover",
+                        index: 0,
+                      ),
+                      bottomNavigationIcon(
+                          icon: Icons.edit, iconText: "Places", index: 1),
+                      bottomNavigationIcon(
+                          icon: Icons.shopping_bag,
+                          iconText: "Tours",
+                          index: 2),
+                      bottomNavigationIcon(
+                          icon: Icons.newspaper, iconText: "Events", index: 3),
+                      bottomNavigationIcon(
+                          icon: Icons.newspaper, iconText: "News", index: 4),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
-        ),
-      ),
-    );
+        ));
   }
 
   Widget bottomNavigationIcon(

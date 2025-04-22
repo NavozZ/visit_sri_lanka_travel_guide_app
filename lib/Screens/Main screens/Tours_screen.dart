@@ -19,9 +19,16 @@ class _ToursScreenState extends State<ToursScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar:
+          true, // Optional: allows content to go under AppBar
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(100), // Adjust the height as needed
+        child: TopicBar(
+          topic: "Tours",
+        ),
+      ),
       body: Stack(
         children: [
-          // Background Image
           Positioned.fill(
             child: Image.network(
               _backgroundImageUrl,
@@ -29,14 +36,9 @@ class _ToursScreenState extends State<ToursScreen> {
             ),
           ),
 
-          // Topic Bar
-          const TopicBar(
-            topic: " Tours",
-          ),
-
           // Search Box
           Positioned(
-            top: 130, // adjust as needed to sit below TopicBar
+            top: 130,
             left: 20,
             right: 20,
             child: Container(
