@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class TopicBar extends StatelessWidget {
-  final String Topic;
+  final String topic;
 
   const TopicBar({
     super.key,
-    required this.Topic,
+    required this.topic,
   });
 
   @override
@@ -38,7 +38,7 @@ class TopicBar extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                Topic,
+                topic,
                 style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,

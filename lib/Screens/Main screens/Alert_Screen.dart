@@ -21,7 +21,7 @@ class _AlertScreenState extends State<AlertScreen> {
         ),
       ),
       TopicBar(
-        Topic: "Notification",
+        topic: "Notification",
       )
     ]));
   }
