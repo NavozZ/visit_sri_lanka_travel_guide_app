@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:visit_sri_lanka_travel_guide_app/utils/app_colors.dart';
 
 class CustomButton extends StatelessWidget {
   final String btntext;
@@ -19,12 +20,12 @@ class CustomButton extends StatelessWidget {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8), color: Colors.black),
           child: isLoading
-              ? const SizedBox(
+              ? SizedBox(
                   width: 20,
                   height: 20,
                   child: SizedBox(
                     child: CircularProgressIndicator(
-                      color: Colors.white,
+                      color: AppColors.primaryColor,
                     ),
                   ),
                 )
