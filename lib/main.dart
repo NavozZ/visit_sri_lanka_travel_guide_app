@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:visit_sri_lanka_travel_guide_app/Homepage.dart';
 import 'package:visit_sri_lanka_travel_guide_app/Providers/Tours_provider.dart';
+import 'package:visit_sri_lanka_travel_guide_app/Providers/event_provider.dart';
+
 import 'package:visit_sri_lanka_travel_guide_app/Providers/places_provider.dart';
 import 'package:visit_sri_lanka_travel_guide_app/Screens/Authetication%20Screens/auth_screen.dart';
 
@@ -16,6 +18,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => PlacesProvider()),
         ChangeNotifierProvider(create: (_) => ToursProvider()),
+        ChangeNotifierProvider(create: (_) => EventProvider()),
       ],
       child: const MyApp(),
     ),

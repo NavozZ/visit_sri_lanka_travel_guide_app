@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:visit_sri_lanka_travel_guide_app/Providers/event_provider.dart';
+
 import 'package:visit_sri_lanka_travel_guide_app/widgets/TopicBar.dart';
+import 'package:visit_sri_lanka_travel_guide_app/widgets/eventCard.dart';
 
 class EventsScreen extends StatefulWidget {
   const EventsScreen({super.key});
@@ -10,15 +15,22 @@ class EventsScreen extends StatefulWidget {
 
 class _EventsScreenState extends State<EventsScreen> {
   @override
+  void initState() {
+    super.initState();
+    // Fetch the events when the screen loads
+    Provider.of<EventProvider>(context, listen: false).fetchEvents();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final eventProvider = Provider.of<EventProvider>(context);
+    final events = eventProvider.eventsData;
+
     return Scaffold(
-      extendBodyBehindAppBar:
-          true, // Optional: allows content to go under AppBar
+      extendBodyBehindAppBar: true,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100), // Adjust the height as needed
-        child: TopicBar(
-          topic: "Events",
-        ),
+        preferredSize: Size.fromHeight(100),
+        child: TopicBar(topic: "Events"),
       ),
       body: Stack(
         children: [
@@ -28,7 +40,23 @@ class _EventsScreenState extends State<EventsScreen> {
               fit: BoxFit.cover,
             ),
           ),
-          // Add your other content here if needed
+          Padding(
+            padding: const EdgeInsets.only(
+                top: 120, left: 12, right: 12), // space below appbar
+            child: ListView.builder(
+              itemCount: events.length,
+              itemBuilder: (context, index) {
+                final event = events[index];
+
+                // Make sure startDate and endDate are DateTime objects
+                DateTime startDate = event.startDate;
+                DateTime endDate = event.endDate;
+
+                return EventCard(
+                    event: event, startDate: startDate, endDate: endDate);
+              },
+            ),
+          ),
         ],
       ),
     );
