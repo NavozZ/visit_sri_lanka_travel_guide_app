@@ -1,22 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:visit_sri_lanka_travel_guide_app/Models/Places.dart';
 import 'package:visit_sri_lanka_travel_guide_app/Models/Tours.dart';
 import 'package:visit_sri_lanka_travel_guide_app/Models/event.dart';
 
 class FirebaseServices {
-  static addSignUpData(
-      {required String email,
-      required String name,
-      required String adress,
-      required String mobileNo}) {
+  static Future<void> addSignUpData({
+    required String email,
+    required String name,
+    required String address,
+    required String mobileNo,
+    required String uid, // NEW
+  }) async {
     CollectionReference userCollectionReference =
         FirebaseFirestore.instance.collection('users');
 
-    userCollectionReference.add({
+    await userCollectionReference.doc(uid).set({
       "email": email,
       "name": name,
-      "adress": adress,
-      "mobile_number": mobileNo
+      "address": address,
+      "mobile-number": mobileNo
     });
   }
 
@@ -111,5 +114,30 @@ class FirebaseServices {
       print('Error fetching events: $e');
       return [];
     }
+  }
+
+//Add Profile Data Fetching & Updating Methods
+  static Future<Map<String, dynamic>?> getUserProfileData() async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid == null) return null;
+
+    final doc =
+        await FirebaseFirestore.instance.collection('users').doc(uid).get();
+    return doc.data();
+  }
+
+  static Future<void> updateUserProfile({
+    required String name,
+    required String address,
+    required String mobileNo,
+  }) async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid == null) return;
+
+    await FirebaseFirestore.instance.collection('users').doc(uid).update({
+      'name': name,
+      'address': address,
+      'mobile-number': mobileNo,
+    });
   }
 }

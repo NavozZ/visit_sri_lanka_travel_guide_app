@@ -87,15 +87,15 @@ class _HomepageState extends State<Homepage> {
                         index: 0,
                       ),
                       bottomNavigationIcon(
-                          icon: Icons.edit, iconText: "Places", index: 1),
+                          icon: Icons.place, iconText: "Places", index: 1),
                       bottomNavigationIcon(
-                          icon: Icons.shopping_bag,
-                          iconText: "Tours",
-                          index: 2),
+                          icon: Icons.tour_sharp, iconText: "Tours", index: 2),
                       bottomNavigationIcon(
                           icon: Icons.newspaper, iconText: "Events", index: 3),
                       bottomNavigationIcon(
-                          icon: Icons.newspaper, iconText: "News", index: 4),
+                          icon: Icons.notification_add,
+                          iconText: "Alerts",
+                          index: 4),
                     ],
                   ),
                 ),
