@@ -32,8 +32,14 @@ class FirebaseAuthService {
         password: password,
       );
       if (credential.user != null) {
+        String uid = credential.user!.uid;
         FirebaseServices.addSignUpData(
-            email: email, name: name, adress: address, mobileNo: mobileNo);
+          uid: uid, // Pass UID here
+          email: email,
+          name: name,
+          address: address,
+          mobileNo: mobileNo,
+        );
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
