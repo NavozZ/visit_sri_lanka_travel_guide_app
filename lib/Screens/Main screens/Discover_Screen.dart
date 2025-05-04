@@ -7,6 +7,7 @@ import 'package:visit_sri_lanka_travel_guide_app/Models/Tours.dart';
 import 'package:visit_sri_lanka_travel_guide_app/Providers/Tours_provider.dart';
 
 import 'package:visit_sri_lanka_travel_guide_app/Providers/places_provider.dart';
+import 'package:visit_sri_lanka_travel_guide_app/Screens/Booking%20Screens/booking_list_screen.dart';
 import 'package:visit_sri_lanka_travel_guide_app/Screens/Main%20screens/profile_screen.dart';
 import 'package:visit_sri_lanka_travel_guide_app/utils/app_colors.dart';
 
@@ -101,10 +102,16 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Settings'),
+              leading: Icon(Icons.book_online),
+              title: Text('My Bookings'),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.pop(context); // Close the drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BookingListPage(),
+                  ),
+                );
               },
             ),
             ListTile(

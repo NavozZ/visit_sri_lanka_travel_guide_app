@@ -55,7 +55,7 @@ class FirebaseServices {
     }
   }
 
-  //get example documents from Firebase DB and return Hotel type data
+  //get example documents from Firebase DB and return tour type data
   static Future<List<Tours>> getTours() async {
     try {
       CollectionReference toursCollectionReference =
@@ -67,16 +67,20 @@ class FirebaseServices {
         final data = doc.data() as Map<String, dynamic>;
 
         return Tours(
+          id: doc.id, // Include the document ID
           title: data['title'] ?? '',
           description: data['description'] ?? '',
           mainimage: data['main-image'] ?? '',
-          prices: Map<String, dynamic>.from(data["price"]),
+          prices:
+              data.containsKey('price') && data['price'] is Map<String, dynamic>
+                  ? Map<String, dynamic>.from(data['price'])
+                  : {}, // Ensure prices is a valid Map
           visitingplaces: data.containsKey('visiting-places')
-              ? List<String>.from(data['visiting-places'])
-              : [],
+              ? List<String>.from(data['visiting-places'] ?? [])
+              : [], // Safeguard against null lists
           otherImages: data.containsKey('other-images')
-              ? List<String>.from(data['other-images'])
-              : [],
+              ? List<String>.from(data['other-images'] ?? [])
+              : [], // Safeguard against null lists
         );
       }).toList();
 
