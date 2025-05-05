@@ -1,51 +1,55 @@
 plugins {
     id "com.android.application"
     id "kotlin-android"
-    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
+    // Flutter plugin must come AFTER the Android & Kotlin plugins
     id "dev.flutter.flutter-gradle-plugin"
     id "com.google.gms.google-services"
 }
 
 android {
-    namespace = "com.example.visit_sri_lanka_travel_guide_app"
-    compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    namespace "com.example.visit_sri_lanka_travel_guide_app"
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
-    }
+    /* -------- Android / Material requirements -------- */
+    compileSdk 34                      // 33 or higher
+    ndkVersion flutter.ndkVersion
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.visit_sri_lanka_travel_guide_app"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = 23
-        targetSdk = flutter.targetSdkVersion
-        versionCode = flutter.versionCode
-        versionName = flutter.versionName
+        applicationId "com.example.visit_sri_lanka_travel_guide_app"
+        minSdk 23                      // Stripe + Google Pay need 21+
+        targetSdk 34
+        versionCode flutter.versionCode
+        versionName flutter.versionName
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions { jvmTarget = "1.8" }
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.debug
+            signingConfig signingConfigs.debug   // TODO: replace with your release config
+            minifyEnabled false
         }
     }
 }
 
 flutter {
-    source = "../.."
+    source "../.."
 }
 
 dependencies {
-  // Import the Firebase BoM
-  implementation(platform("com.google.firebase:firebase-bom:33.12.0"))
+    /* ---------- Firebase BoM (keeps every Firebase lib in sync) ---------- */
+    implementation platform("com.google.firebase:firebase-bom:33.12.0")
 
+    /* ---------- Kotlin BoM ---------- */
+    implementation platform("org.jetbrains.kotlin:kotlin-bom:1.8.0")
+
+    /* ---------- Material Components (MUST be ≥ 1.4 for Stripe) ---------- */
+    implementation "com.google.android.material:material:1.11.0"
+
+    /* ---------- AndroidX Fragment / Activity (needed for FlutterFragmentActivity) ---------- */
+    implementation "androidx.activity:activity-ktx:1.8.2"
+    implementation "androidx.fragment:fragment-ktx:1.6.2"
 }

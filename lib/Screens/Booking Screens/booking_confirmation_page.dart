@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:visit_sri_lanka_travel_guide_app/Models/Tours.dart';
+import 'package:visit_sri_lanka_travel_guide_app/services/payment_gateway_service/payment_gateway.dart';
 import 'package:visit_sri_lanka_travel_guide_app/widgets/custom_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -121,21 +122,41 @@ class BookingConfirmationPage extends StatelessWidget {
                   return;
                 }
 
-                final bookingId =
-                    FirebaseFirestore.instance.collection('bookings').doc().id;
-
-                final booking = Booking(
-                  id: bookingId,
-                  userId: user.uid,
-                  tourId: tour.id!,
-                  tourTitle: tour.title ?? '',
-                  bookingDate: selectedDate,
-                  priceType: priceType,
-                  price: price,
-                  createdAt: DateTime.now(),
-                );
-
                 try {
+                  // Step 1: Create PaymentIntent
+                  final numericPrice = double.tryParse(price.toString()) ?? 0.0;
+                  final paymentData = await PaymentGateway.createPaymentIntent(
+                    amount: (numericPrice * 100).toInt().toString(),
+                  );
+
+                  if (paymentData == null ||
+                      paymentData['client_secret'] == null) {
+                    throw Exception("Failed to create PaymentIntent.");
+                  }
+
+                  final clientSecret = paymentData['client_secret'];
+
+                  // Step 2: Init & show payment sheet
+                  await PaymentGateway.initAndPresentPaymentSheet(
+                      clientSecret: clientSecret);
+
+                  // Step 3: Save booking on successful payment
+                  final bookingId = FirebaseFirestore.instance
+                      .collection('bookings')
+                      .doc()
+                      .id;
+
+                  final booking = Booking(
+                    id: bookingId,
+                    userId: user.uid,
+                    tourId: tour.id!,
+                    tourTitle: tour.title ?? '',
+                    bookingDate: selectedDate,
+                    priceType: priceType,
+                    price: price,
+                    createdAt: DateTime.now(),
+                  );
+
                   await FirebaseFirestore.instance
                       .collection('bookings')
                       .doc(bookingId)
@@ -143,15 +164,16 @@ class BookingConfirmationPage extends StatelessWidget {
 
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                      content: Text("Tour booked successfully!"),
+                      content: Text("Tour booked and payment successful!"),
                       behavior: SnackBarBehavior.floating,
                     ),
                   );
+
                   Navigator.pop(context);
                 } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text("Failed to book: $e"),
+                      content: Text("Booking/payment failed: $e"),
                       behavior: SnackBarBehavior.floating,
                     ),
                   );

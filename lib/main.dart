@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:provider/provider.dart';
 import 'package:visit_sri_lanka_travel_guide_app/Homepage.dart';
 import 'package:visit_sri_lanka_travel_guide_app/Providers/Tours_provider.dart';
@@ -9,9 +10,11 @@ import 'package:visit_sri_lanka_travel_guide_app/Providers/event_provider.dart';
 
 import 'package:visit_sri_lanka_travel_guide_app/Providers/places_provider.dart';
 import 'package:visit_sri_lanka_travel_guide_app/Screens/Authetication%20Screens/auth_screen.dart';
+import 'package:visit_sri_lanka_travel_guide_app/constants/keys.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Stripe.publishableKey = publishableKey;
   await Firebase.initializeApp();
 
   runApp(
