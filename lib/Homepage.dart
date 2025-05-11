@@ -7,6 +7,7 @@ import 'package:visit_sri_lanka_travel_guide_app/Screens/Main%20screens/Discover
 import 'package:visit_sri_lanka_travel_guide_app/Screens/Main%20screens/Places_screen.dart';
 import 'package:visit_sri_lanka_travel_guide_app/Screens/Main%20screens/Tours_screen.dart';
 import 'package:visit_sri_lanka_travel_guide_app/Screens/Main%20screens/events_screen.dart';
+import 'package:visit_sri_lanka_travel_guide_app/services/firebase_notification_service.dart';
 import 'package:visit_sri_lanka_travel_guide_app/services/firebase_services.dart';
 import 'package:visit_sri_lanka_travel_guide_app/utils/app_colors.dart';
 
@@ -33,6 +34,7 @@ class _HomepageState extends State<Homepage> {
   @override
   void initState() {
     super.initState();
+    FirebaseNotificationService.initNotification();
 
     // Delay to ensure context is available
     Future.microtask(() async {
