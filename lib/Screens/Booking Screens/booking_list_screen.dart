@@ -12,7 +12,9 @@ class BookingListPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Bookings'),
-        backgroundColor: Colors.teal,
+        backgroundColor: const Color.fromRGBO(95, 4, 32, 1),
+        titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
+        centerTitle: true,
       ),
       body: StreamBuilder<List<Booking>>(
         stream: Provider.of<BookingProvider>(context).userBookingsStream,
@@ -32,18 +34,48 @@ class BookingListPage extends StatelessWidget {
           }
 
           return ListView.builder(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
             itemCount: bookings.length,
             itemBuilder: (context, index) {
               final booking = bookings[index];
-              return Card(
-                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              return Container(
+                margin: const EdgeInsets.only(bottom: 12),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 6,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
                 child: ListTile(
-                  leading: const Icon(Icons.tour, color: Colors.teal),
-                  title: Text(booking.tourTitle),
-                  subtitle: Text(
-                    "Date: ${DateFormat('yyyy-MM-dd').format(booking.bookingDate)}\n"
-                    "Type: ${_capitalize(booking.priceType)}\n"
-                    "Price: \$${booking.price}",
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.teal.shade100,
+                    child: const Icon(Icons.tour, color: Colors.teal),
+                  ),
+                  title: Text(
+                    booking.tourTitle,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  subtitle: Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                            "Date: ${DateFormat('yyyy-MM-dd').format(booking.bookingDate)}"),
+                        Text("Type: ${_capitalize(booking.priceType)}"),
+                        Text("Price: \$${booking.price}"),
+                      ],
+                    ),
                   ),
                 ),
               );

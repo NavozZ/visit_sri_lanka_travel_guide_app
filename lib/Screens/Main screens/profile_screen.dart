@@ -29,9 +29,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final uid = FirebaseAuth.instance.currentUser?.uid;
 
     if (uid == null) {
-      setState(() {
-        _isLoading = false;
-      });
+      setState(() => _isLoading = false);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("User not logged in")),
       );
@@ -53,17 +51,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _isLoading = false;
         });
       } else {
-        setState(() {
-          _isLoading = false;
-        });
+        setState(() => _isLoading = false);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("User profile not found")),
         );
       }
     } catch (e) {
-      setState(() {
-        _isLoading = false;
-      });
+      setState(() => _isLoading = false);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Failed to load profile: $e")),
       );
@@ -105,54 +99,112 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Edit Profile')),
+      appBar: AppBar(
+        title: const Text('Edit Profile'),
+        backgroundColor: const Color.fromRGBO(95, 4, 32, 1),
+        titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
+        centerTitle: true,
+      ),
       body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Form(
-                key: _formKey,
-                child: ListView(
-                  children: [
-                    TextFormField(
-                      initialValue: name,
-                      decoration: const InputDecoration(labelText: 'Name'),
-                      onSaved: (val) => name = val,
-                      validator: (val) =>
-                          val == null || val.isEmpty ? 'Enter name' : null,
-                    ),
-                    TextFormField(
-                      initialValue: email,
-                      decoration: const InputDecoration(labelText: 'Email'),
-                      onSaved: (val) => email = val,
-                      validator: (val) =>
-                          val == null || val.isEmpty ? 'Enter email' : null,
-                    ),
-                    TextFormField(
-                      initialValue: mobileNumber,
-                      decoration:
-                          const InputDecoration(labelText: 'Mobile Number'),
-                      onSaved: (val) => mobileNumber = val,
-                      validator: (val) => val == null || val.isEmpty
-                          ? 'Enter mobile number'
-                          : null,
-                    ),
-                    TextFormField(
-                      initialValue: address,
-                      decoration: const InputDecoration(labelText: 'Address'),
-                      onSaved: (val) => address = val,
-                      validator: (val) =>
-                          val == null || val.isEmpty ? 'Enter address' : null,
-                    ),
-                    const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: updateUserData,
-                      child: const Text('Update Profile'),
-                    ),
+          ? const Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(height: 16),
+                  Text("Loading profile..."),
+                ],
+              ),
+            )
+          : SingleChildScrollView(
+              padding: const EdgeInsets.all(20),
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 10,
+                      offset: Offset(0, 4),
+                    )
                   ],
+                ),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      _buildTextField(
+                        label: 'Name',
+                        initialValue: name,
+                        onSaved: (val) => name = val,
+                      ),
+                      _buildTextField(
+                        label: 'Email',
+                        initialValue: email,
+                        keyboardType: TextInputType.emailAddress,
+                        onSaved: (val) => email = val,
+                      ),
+                      _buildTextField(
+                        label: 'Mobile Number',
+                        initialValue: mobileNumber,
+                        keyboardType: TextInputType.phone,
+                        onSaved: (val) => mobileNumber = val,
+                      ),
+                      _buildTextField(
+                        label: 'Address',
+                        initialValue: address,
+                        onSaved: (val) => address = val,
+                      ),
+                      const SizedBox(height: 30),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color.fromRGBO(95, 4, 32, 1),
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          onPressed: updateUserData,
+                          child: const Text(
+                            'Update Profile',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
+    );
+  }
+
+  Widget _buildTextField({
+    required String label,
+    required String? initialValue,
+    required FormFieldSetter<String> onSaved,
+    TextInputType keyboardType = TextInputType.text,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: TextFormField(
+        initialValue: initialValue,
+        keyboardType: keyboardType,
+        decoration: InputDecoration(
+          labelText: label,
+          filled: true,
+          fillColor: Colors.grey.shade100,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+        onSaved: onSaved,
+        validator: (val) => val == null || val.isEmpty ? 'Enter $label' : null,
+      ),
     );
   }
 }

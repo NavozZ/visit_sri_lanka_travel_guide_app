@@ -36,7 +36,7 @@ class TourCard extends StatelessWidget {
                 child: Image.network(
                   toursData.mainimage ?? '',
                   width: size,
-                  height: size * 0.6,
+                  height: size * 0.5,
                   fit: BoxFit.cover,
                   loadingBuilder: (context, child, loadingProgress) {
                     if (loadingProgress == null) {
@@ -63,7 +63,7 @@ class TourCard extends StatelessWidget {
                     Text(
                       toursData.title ?? 'No Title Available',
                       style: const TextStyle(
-                        fontSize: 16,
+                        fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
