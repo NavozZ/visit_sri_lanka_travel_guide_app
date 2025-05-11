@@ -1,0 +1,2 @@
+D:/GitHub/CGP/visit_sri_lanka_travel_guide_app/android/app/.cxx/Debug/566x1s4d/x86/CMakeFiles/edit_cache.dir
+D:/GitHub/CGP/visit_sri_lanka_travel_guide_app/android/app/.cxx/Debug/566x1s4d/x86/CMakeFiles/rebuild_cache.dir
