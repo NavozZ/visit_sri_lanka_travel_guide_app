@@ -23,7 +23,7 @@ class Tours {
       id: documentId, // Set the document ID
       title: data['title'] ?? '',
       description: data['description'] ?? '',
-      mainimage: data['mainimage'] ?? '',
+      mainimage: data['main-image'] ?? '',
       otherImages: data.containsKey('other-images')
           ? List<String>.from(data['other-images'])
           : [],
@@ -38,7 +38,7 @@ class Tours {
     return {
       'title': title,
       'description': description,
-      'mainimage': mainimage,
+      'main-image': mainimage,
       'other-images': otherImages,
       'visiting-places': visitingplaces,
     };

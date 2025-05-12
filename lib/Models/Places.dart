@@ -20,7 +20,7 @@ class Places {
   factory Places.fromSnapshot(Map<String, dynamic> data) {
     return Places(
       title: data['title'] ?? '',
-      mainimage: data['mainimage'] ?? '',
+      mainimage: data['main-image'] ?? '',
       description: data['description'] ?? '',
       moreinformation: data['more-information'] ?? '',
       otherImages: data.containsKey('other-images')
