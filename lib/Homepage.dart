@@ -132,26 +132,6 @@ class _HomepageState extends State<Homepage> {
       ),
     );
   }
-  // Future signout() async {
-  //   await FirebaseAuth.instance.signOut();
-  // }
+  
 }
 
-      // body: Center(
-      //     child: Column(
-      //   mainAxisAlignment: MainAxisAlignment.center,
-      //   children: [
-      //     InkWell(
-      //       onTap: () {
-      //         signout();
-      //       },
-      //       child: Icon(
-      //         Icons.logout,
-      //         color: Colors.black,
-      //       ),
-      //     ),
-      
-
-  // Future signout() async {
-  //   await FirebaseAuth.instance.signOut();
-  // }
